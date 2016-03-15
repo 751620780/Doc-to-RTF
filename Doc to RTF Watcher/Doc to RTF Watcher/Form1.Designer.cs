@@ -29,11 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dirBox = new System.Windows.Forms.TextBox();
             this.browseButton = new System.Windows.Forms.Button();
+            this.dirBox = new System.Windows.Forms.TextBox();
             this.startButton = new System.Windows.Forms.Button();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
+            this.statusBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -47,13 +50,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Enter the folder to watch:";
             // 
-            // dirBox
-            // 
-            this.dirBox.Location = new System.Drawing.Point(7, 20);
-            this.dirBox.Name = "dirBox";
-            this.dirBox.Size = new System.Drawing.Size(215, 20);
-            this.dirBox.TabIndex = 0;
-            // 
             // browseButton
             // 
             this.browseButton.Location = new System.Drawing.Point(228, 18);
@@ -64,9 +60,16 @@
             this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
+            // dirBox
+            // 
+            this.dirBox.Location = new System.Drawing.Point(7, 20);
+            this.dirBox.Name = "dirBox";
+            this.dirBox.Size = new System.Drawing.Size(215, 20);
+            this.dirBox.TabIndex = 0;
+            // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(240, 72);
+            this.startButton.Location = new System.Drawing.Point(241, 72);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 1;
@@ -74,18 +77,38 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
+            // statusBar
+            // 
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusBar.Location = new System.Drawing.Point(0, 102);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(334, 22);
+            this.statusBar.TabIndex = 2;
+            this.statusBar.Text = "Off";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(0, 17);
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // WatcherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 106);
+            this.ClientSize = new System.Drawing.Size(334, 124);
+            this.Controls.Add(this.statusBar);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.groupBox1);
             this.Name = "WatcherForm";
             this.Text = "Doc to RTF Watcher";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.statusBar.ResumeLayout(false);
+            this.statusBar.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -96,6 +119,8 @@
         private System.Windows.Forms.TextBox dirBox;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
     }
 }
 

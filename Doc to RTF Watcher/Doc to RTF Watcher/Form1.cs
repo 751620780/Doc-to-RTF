@@ -43,10 +43,11 @@ namespace Doc_to_RTF_Watcher
                     if (!newFiles.SequenceEqual(oldFiles))
                     {   //So we have new files to process.
                         Console.WriteLine("New files found!");
+                        updateStatus("New files found!");
                         //Before we do the processing, we want to check that all the files can be read
                         status = 3; //Update status flag to show that we're checking the files
                                     //This will cause us to wait for a second or so, which is fine
-                        oldFiles = newFiles;
+                        //oldFiles = newFiles;
                         runConversion();
                     }
                     break;
@@ -153,11 +154,13 @@ namespace Doc_to_RTF_Watcher
                         startWatcher(); //Start the watcher
                         startButton.Text = "Stop";
                         dirBox.Enabled = false;
+                        updateStatus("Watching " + dirBox.Text + "...");
                     }
                     break;
                 case 1: //Watching but not processing or checking
                     //We can just stop the watcher straight away
                     stopWatcher();
+                    statusLabel.Text = "";
                     break;
                 case 2: //If it's processing or checking then tell it to shutdown when it's done
                 case 3:
@@ -170,12 +173,13 @@ namespace Doc_to_RTF_Watcher
         {   //Converts all the .doc and .docx files in the folder into 
 
             //First get all the files in the folder that we need to convert
-            string[] fileNames = Directory.GetFiles(dirBox.Text, "*.doc*");
+            
 
             //Pick up and then clear the list of files to convert
-            //string[] fileNames = toConvert.ToArray();
-            Console.WriteLine("In runConversion now. Converting the following files:");
-            Console.WriteLine(fileNames);
+            //string[] fileNames = toConvert.ToArray
+            updateStatus("Starting conversion...");
+            string[] fileNames = Directory.GetFiles(dirBox.Text, "*.doc*");
+
             //toConvert.Clear();
 
             //Now create word and get transforming
@@ -192,6 +196,7 @@ namespace Doc_to_RTF_Watcher
                 object format = Word.WdSaveFormat.wdFormatRTF;  //Have to set this to an instance of an object; we can't just use the reference in SaveAs2.
                 try
                 {   //This returns an error even though the file is fine
+                    updateStatus("Opening " + fileName + "...");
                     wordDoc = wordApp.Documents.Open(fileName);
                     wordDoc.SaveAs2(newName, format);
                     wordDoc.Close();
@@ -204,7 +209,7 @@ namespace Doc_to_RTF_Watcher
             releaseObject(wordApp);
             wordDoc = null; //We have to do this because of the try loop above
             releaseObject(wordDoc);
-
+            updateStatus("Deleting files...");
             //Delete the files we've converted
             foreach (string fileName in fileNames)
             {
@@ -216,7 +221,15 @@ namespace Doc_to_RTF_Watcher
             }
 
             //Finally, restart the watcher
+            updateStatus("Conversion completed.");
             startWatcher();
+        }
+
+        private void updateStatus(string updateText)
+        {
+            //statusLabel.Text = updateText;
+            //statusBar.Refresh();
+            MessageBox.Show(updateText);
         }
 
         //Release interop objects
